@@ -1,8 +1,8 @@
-'odg'
-'tac'
-'ouy'
-'ih'
-'olleh'
-'wordl'
-'eefb'
-'hcira'
+odg
+tac
+ouy
+ih
+olleh
+wordl
+eefb
+hcira
