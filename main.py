@@ -7,8 +7,8 @@ def random_char():
 
 def generate_test_case(sec_dic):
     res = []
-    for i in range(24,25): # max length is 24
-        for j in range(11):
+    for i in range(9): # max length is 24
+        for j in range(6):
             #sub = []
             word = ''
             k = i
@@ -21,18 +21,18 @@ def generate_test_case(sec_dic):
             res.append(word)
     return res
 
-def get_words(a, l, r, res):
+def get_words(sec_dic,a, l, r, res):
     if l==r:
         word = ''.join(a[:])
-        if word in dictionary:
+        if word in sec_dic[r+1]:
             res.append(word)
             return res
     else: 
         for i in range(l,r+1): 
             a[l], a[i] = a[i], a[l] 
-            get_words(a, l+1, r, res) 
+            get_words(sec_dic,a, l+1, r, res) 
             a[l], a[i] = a[i], a[l] # backtrack 
-    
+
 def dictionary_transform(dictionary):
     sec_dic = {}
     cnt = 0
@@ -50,8 +50,8 @@ def charCount(word):
         dict[i] = dict.get(i, 0) + 1
     return dict
   
-def get_wordsII(lwords, charSet, k, res): 
-    for word in lwords[k]:
+def get_wordsII(second_dictionary, charSet, k, res): 
+    for word in second_dictionary[k]:
         word = word.lower()
         flag = 1
         chars = charCount(word) 
@@ -62,9 +62,9 @@ def get_wordsII(lwords, charSet, k, res):
                 if charSet.count(key) != chars[key]: 
                     flag = 0
         if flag == 1: 
-            print(word)
+            # print(word)
             res.append(word)
-            return res
+    return res
 
 if __name__ == '__main__':
         
@@ -80,53 +80,55 @@ if __name__ == '__main__':
         if line.strip():dictionary.append(line.strip().lower())
     f.close()
 
-    # n = len(dictionary)
+    n = len(dictionary)
     # print len(dictionary)
     # print dictionary[0], dictionary[1],dictionary[n-2], dictionary[n-1]
     # dictionary = set(dictionary)
     
-    # sec_dic = dictionary_transform(dictionary)
-    # cnt = 0
-    # for i in range(25):
-    #     if sec_dic.get(i):
-    #         cnt += len(sec_dic[i])
+    sec_dic = dictionary_transform(dictionary)
+    cnt = 0
+    for i in range(25):
+        if sec_dic.get(i):
+            cnt += len(sec_dic[i])
     #         print i,len(sec_dic[i])
-    # print n == cnt
+    print 'sec_dic build successful!' if n == cnt else 'sec_dic build failure!'
     
-    # print sec_dic[9][0:32403:1000]
+#     res = []
+#     for i in range(1,10):res.append(sec_dic[i][0:50:10])
+#     for c in [h for r in res for h in r]: print c
+        
     #generate_test_case(sec_dic) # generate test case
         
-    # -------------- Test the result from user's input ---------------- #
-    # N = int(raw_input('Enter total numbers of test cases:'))
-    # for _ in range(N):
-    #     res = []
-    #     s = raw_input('Input a string:').rstrip()
-    #     n = len(s) 
-    #     a = list(s.lower()) 
-    #     get_words(a, 0, n-1, res)
-    #     print 'res=',list(set(res))
-        
-    # -------------- Test the result from test_case.txt ---------------- #
+    # --------------------------- Test the results  ----------------------------- #
     print 'Pull the test cases from website'
-    for i in [0,1,2]:
-        if i>0: 
-            link2 = "https://raw.githubusercontent.com/yzcmf/DiDi_Interview/master/test_cases" + str(i+1) + ".txt"
-        else:
-            link2 = "https://raw.githubusercontent.com/yzcmf/DiDi_Interview/master/test_cases.txt"
-        f2 = urllib.urlopen(link2)
-        line = f2.readline()
-        print '--------------------Test Case ' + str(i+1) + '--------------------'
-        tests = []
-        tests.append(line.strip())
-        while line:
+    command = 's'
+    while command == 's':
+        k = int(raw_input('Enter test cases number from 1-5 or other number for user input:'))
+        
+        # -------------- Test the result from test_case.txt ---------------- #
+        if k >= 1 and k <= 5:
+            link2="https://raw.githubusercontent.com/yzcmf/DiDi_Interview/master/test_cases" + str(k) + ".txt"   
+            f2 = urllib.urlopen(link2)
             line = f2.readline()
-            if line.strip():tests.append(line.strip().lower())
-        f2.close()
-    
-        for test in tests:
-            res = []
-            s = test
-            n = len(s) 
-            a = list(s.lower()) 
-            get_words(a, 0, n-1, res)
-            print 'input=',s,'res=',list(set(res))
+            print '--------------------Test Case ' + str(k) + '--------------------'
+            strs = [line.strip()]
+            while line:
+                line = f2.readline()
+                if line.strip():strs.append(line.strip().lower())
+            f2.close()
+            for i,s in enumerate(strs):
+                res, n, a = [],len(s),list(s.lower()) 
+                # get_words(sec_dic,a, 0, n-1, res)
+                if n: get_wordsII(sec_dic, a, n, res)
+                print 'case'+ str(i+1) + ':','input=',s,'res=',list(set(res))
+        
+        # -------------- Test the result from user's input ---------------- #
+        else:
+            N = int(raw_input('Enter total numbers of test cases you want to test:'))
+            for i in range(N):
+                s = raw_input('Input a string:').strip()
+                res, n, a = [],len(s),list(s.lower()) 
+                if n: get_wordsII(sec_dic, a, n, res)
+                print 'case'+ str(i+1) + ':','input=',s,'res=',list(set(res))
+        
+        command = raw_input('Enter s to start or e to end the program:')
