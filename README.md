@@ -22,3 +22,9 @@ How to test
 
 git clone git clone https://github.com/username/xyz.git
 cd xyz && ./runme.sh
+
+
+Note:
+1.commit 9132ae6 : contains details about each API; delete it for making the main good looking
+2.test cases 1-5, word length is 0-25; word dictionary is https://raw.githubusercontent.com/lad/words/master/words, which is around 22k words in total
+3. main program: enter number 1-5 to load corsponding test cases by github; enter other number to input test cases yourself.
