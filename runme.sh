@@ -1,2 +1,3 @@
-#!/usr/bin/env python
-python main.py
+#!/bin/bash
+chmod +x main.py
+./main.py
