@@ -1,26 +1,6 @@
 import urllib
-import random
 
 # -------------------------  Build API --------------------------- #
-def random_char():
-    return random.randint(97, 122)
-
-def generate_test_case(sec_dic):
-    res = []
-    for i in range(9): # max length is 24
-        for j in range(6):
-            #sub = []
-            word = ''
-            k = i
-            while k > 0:
-                word += chr(random_char())
-                k -= 1
-            # get_wordsII(sec_dic,word,len(word),sub)
-            # if sub: 
-            print word
-            res.append(word)
-    return res
-
 def get_words(sec_dic,a, l, r, res):
     if l==r:
         word = ''.join(a[:])
@@ -31,7 +11,7 @@ def get_words(sec_dic,a, l, r, res):
         for i in range(l,r+1): 
             a[l], a[i] = a[i], a[l] 
             get_words(sec_dic,a, l+1, r, res) 
-            a[l], a[i] = a[i], a[l] # backtrack 
+            a[l], a[i] = a[i], a[l]
 
 def dictionary_transform(dictionary):
     sec_dic = {}
@@ -62,7 +42,6 @@ def get_wordsII(second_dictionary, charSet, k, res):
                 if charSet.count(key) != chars[key]: 
                     flag = 0
         if flag == 1: 
-            # print(word)
             res.append(word)
     return res
 
@@ -81,8 +60,6 @@ if __name__ == '__main__':
     f.close()
 
     n = len(dictionary)
-    # print len(dictionary)
-    # print dictionary[0], dictionary[1],dictionary[n-2], dictionary[n-1]
     # dictionary = set(dictionary)
     
     sec_dic = dictionary_transform(dictionary)
@@ -90,14 +67,7 @@ if __name__ == '__main__':
     for i in range(25):
         if sec_dic.get(i):
             cnt += len(sec_dic[i])
-    #         print i,len(sec_dic[i])
     print 'sec_dic build successful!' if n == cnt else 'sec_dic build failure!'
-    
-#     res = []
-#     for i in range(1,10):res.append(sec_dic[i][0:50:10])
-#     for c in [h for r in res for h in r]: print c
-        
-    #generate_test_case(sec_dic) # generate test case
         
     # --------------------------- Test the results  ----------------------------- #
     print 'Pull the test cases from website'
