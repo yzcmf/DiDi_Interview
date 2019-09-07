@@ -48,7 +48,7 @@ def get_wordsII(second_dictionary, charSet, k, res):
 if __name__ == '__main__':
         
     # -------------------------- Data Preparation -------------------- #
-    print 'Pull the target dictionary from website'
+    print 'Pull the target dictionary from website...'
     dictionary = []
     link = "https://raw.githubusercontent.com/yzcmf/DiDi_Interview/master/words.txt"
     f = urllib.urlopen(link)
@@ -67,16 +67,16 @@ if __name__ == '__main__':
     for i in range(25):
         if sec_dic.get(i):
             cnt += len(sec_dic[i])
-    print 'sec_dic build successful!' if n == cnt else 'sec_dic build failure!'
+    print 'dictionary build successful!' if n == cnt else 'dictionary build failure!'
         
     # --------------------------- Test the results  ----------------------------- #
-    print 'Pull the test cases from website'
     command = 's'
     while command == 's':
         k = int(raw_input('Enter test cases number from 1-5 or other number for user input:'))
         
         # -------------- Test the result from test_case.txt ---------------- #
         if k >= 1 and k <= 5:
+            print 'Pull the test cases from website...'
             link2="https://raw.githubusercontent.com/yzcmf/DiDi_Interview/master/test_cases" + str(k) + ".txt"   
             f2 = urllib.urlopen(link2)
             line = f2.readline()
