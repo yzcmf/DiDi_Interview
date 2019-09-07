@@ -34,4 +34,4 @@ Word dictionary : https://raw.githubusercontent.com/lad/words/master/words, arou
 
 Main program : enter number 1-5 to load corsponding test cases by github; enter other number to input test cases yourself.
 
-
+get_word func: getwordI is much slower than getwordII, because I map length of the word as the key for getwordII; Both getword func is useful, and both of them could be optimized by using set(O(1)) for the store the words instead of list(O(N))
